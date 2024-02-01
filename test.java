@@ -21,7 +21,7 @@ public class test extends JPanel {
         g2.fillRect(0, 0, 600, 600);
         g2.setColor(Color.BLACK);
         
-        MyobjectImage.baby_chick(g2);
+        //MyobjectImage.baby_chick(g2);
         paint.colorpent(buffer);
         g.drawImage(buffer, 0, 0, null);
     }
