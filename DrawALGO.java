@@ -131,4 +131,91 @@ public class DrawALGO {
     static void plot(Graphics g, int x, int y) {
         g.fillRect(x, y, 2, 2);
     }
+
+    static public void midpointCircle(Graphics g, int centerX, int centerY, int radius) {
+        int x = 0;
+        int y = radius;
+        int Dx = 2 * x;
+        int Dy = 2 * y;
+        int D = 1 - radius;
+    
+        while (x <= y) {
+            // Plot points in all octants
+            plot(g, centerX + x, centerY + y);
+            plot(g, centerX - x, centerY + y);
+            plot(g, centerX + x, centerY - y);
+            plot(g, centerX - x, centerY - y);
+            plot(g, centerX + y, centerY + x);
+            plot(g, centerX - y, centerY + x);
+            plot(g, centerX + y, centerY - x);
+            plot(g, centerX - y, centerY - x);
+    
+            x = x + 1;
+            Dx = Dx + 2;
+            D = D + Dx + 1;
+    
+            if (D >= 0) {
+                y = y - 1;
+                Dy = Dy - 2;
+                D = D - Dy;
+            }
+        }
+    }
+
+    static public void midpointEllipse(Graphics g, int centerX, int centerY, int a, int b) {
+        int a2 = a * a;
+        int b2 = b * b;
+        int twoA2 = 2 * a2;
+        int twoB2 = 2 * b2;
+    
+        // REGION 1
+        int x = 0;
+        int y = b;
+        int D = Math.round(b2 - a2 * b + a2 / 4);
+        int Dx = 0;
+        int Dy = twoA2 * y;
+    
+        while (Dx <= Dy) {
+            // Plot points in 4 quadrants
+            plot(g, centerX + x, centerY + y);
+            plot(g, centerX - x, centerY + y);
+            plot(g, centerX + x, centerY - y);
+            plot(g, centerX - x, centerY - y);
+    
+            x = x + 1;
+            Dx = Dx + twoB2;
+            D = D + Dx + b2;
+    
+            if (D >= 0) {
+                y = y - 1;
+                Dy = Dy - twoA2;
+                D = D - Dy;
+            }
+        }
+    
+        // REGION 2
+        x = a;
+        y = 0;
+        D = Math.round(a2 - b2 * a + b2 / 4);
+        Dx = twoB2 * x;
+        Dy = 0;
+    
+        while (Dx >= Dy) {
+            // Plot points in 4 quadrants
+            plot(g, centerX + x, centerY + y);
+            plot(g, centerX - x, centerY + y);
+            plot(g, centerX + x, centerY - y);
+            plot(g, centerX - x, centerY - y);
+    
+            y = y + 1;
+            Dy = Dy + twoA2;
+            D = D + Dy + a2;
+    
+            if (D >= 0) {
+                x = x - 1;
+                Dx = Dx - twoB2;
+                D = D - Dx;
+            }
+        }
+    }
 }

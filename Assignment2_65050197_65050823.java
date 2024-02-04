@@ -21,9 +21,9 @@ class AllGraphics extends JPanel implements Runnable {
     }
 
     public void run() {
-        int initialSize = 0;  // Initial size of the image
-        int finalSize = 201;   // Final size of the image
-        long duration = 3000;  // Duration of the resizing in milliseconds
+        int initialSize = 0;  
+        int finalSize = 201;   
+        long duration = 3000; 
         long startTime = System.currentTimeMillis();
 
         while (System.currentTimeMillis() - startTime < duration) {
@@ -36,12 +36,13 @@ class AllGraphics extends JPanel implements Runnable {
                 e.printStackTrace();
             }
         }
+
     }
 
     public void paintComponent(Graphics g) {
         AffineTransform transform = new AffineTransform();
         transform = AffineTransform.getTranslateInstance(300, 300);
-        double scailing = currentSize/100;
+        double scailing = currentSize/100 + 0.5;
         transform.scale(scailing, scailing);
         transform.translate(-300, -300);
         
@@ -49,23 +50,19 @@ class AllGraphics extends JPanel implements Runnable {
 
         // Get Graphics2D from BufferedImage
         Graphics2D g2 = img.createGraphics();
-
+        
         // Clear the image
         g2.setColor(Color.WHITE);
         g2.fillRect(0, 0, img.getWidth(), img.getHeight());
         g2.setColor(Color.BLACK);
 
         g2.setTransform(transform);
-        MyobjectImage.baby_chick(g2);
-        // Draw using MyobjectImage.baby_chick
-        // System.out.println(currentSize);
-        //MyobjectImage.baby_chick(g2,currentSize);
-        // MyobjectImage.baby_chick(g2,0);
+        
+        MyobjectImage.baby_chick(g2 , img);
 
-        // Release the resources of Graphics2D
+        DrawALGO.floodFill(img, 1, 1, Color.white, new Color(230 ,180 ,193));
         g2.dispose();
 
-        // Draw the BufferedImage to the JPanel
         g.drawImage(img, 0, 0, this);
     }
 }
